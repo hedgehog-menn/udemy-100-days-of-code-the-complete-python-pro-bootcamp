@@ -9,6 +9,8 @@ AGE = YOUR AGE
 APP_ID = YOUR NUTRITIONIX APP ID
 API_KEY = YOUR NUTRITIONIX API KEY
 
+SHEETY_AUTH = YOUR SHEETY AUTHORIZATION
+
 exercise_endpoint = "https://trackapi.nutritionix.com/v2/natural/exercise"
 sheety_endpoint = YOUR SHEETY ENDPOINT
 
@@ -32,19 +34,26 @@ print(exercise_response.text)
 
 exercises_data = exercise_response.json()["exercises"]
 
+sheety_headers = {
+    "Content-Type": "application/json",
+    "Authorization": SHEETY_AUTH,
+}
+
 now = datetime.now()
+today = now.strftime("%d/%m/%Y") # dd/mm/yyyy
+time = now.strftime("%X") # hh:mm:ss
 
 for exercise in exercises_data:
     sheet_input = {
-        "workouts": {
-            "day": now.strftime("%Y/%m/%d"), # yyyy/mm/dd
-            "time": now.strftime("%X"), # hh:mm:ss
+        "workout": {
+            "day": today,
+            "time": time,
             "exercise": exercise["name"].title(),
             "duration": exercise["duration_min"],
             "calories": exercise["nf_calories"],
         }
     }
     # print(sheet_body)
-    sheety_response = requests.post(url=sheety_endpoint, json=sheet_input)
+    sheety_response = requests.post(url=sheety_endpoint, json=sheet_input, headers=sheety_headers)
     sheety_response.raise_for_status()
     print(sheety_response.text)
