@@ -1,18 +1,18 @@
 import requests
 from datetime import datetime
+import os
 
 GENDER = YOUR GENDER # male/female
 WEIGHT_KG = YOUR WEIGHT
 HEIGHT_CM = YOUR HEIGHT
 AGE = YOUR AGE
 
-APP_ID = YOUR NUTRITIONIX APP ID
-API_KEY = YOUR NUTRITIONIX API KEY
-
-SHEETY_AUTH = YOUR SHEETY AUTHORIZATION
+APP_ID =os.environ["NT_APP_ID"]
+API_KEY = os.environ["NT_API_KEY"]
+SHEETY_TOKEN = os.environ["SHEETY_TOKEN"]
 
 exercise_endpoint = "https://trackapi.nutritionix.com/v2/natural/exercise"
-sheety_endpoint = YOUR SHEETY ENDPOINT
+sheety_endpoint = os.environ["SHEETY_ENDPOINT"]
 
 headers = {
     "Content-Type": "application/json",
@@ -36,7 +36,7 @@ exercises_data = exercise_response.json()["exercises"]
 
 sheety_headers = {
     "Content-Type": "application/json",
-    "Authorization": SHEETY_AUTH,
+    "Authorization": f"Bearer {SHEETY_TOKEN}",
 }
 
 now = datetime.now()
