@@ -3,18 +3,18 @@ from data_manager import DataManager
 from flight_search import FlightSearch
 from flight_data import find_cheapest_flight
 from datetime import datetime, timedelta
-from notification_manager import NotificationManager
+# from notification_manager import NotificationManager
 
 # Set your origin airport code
 ORIGIN_CITY_IATA = "TPE" # Taipai, Taiwan
 
 data_manager = DataManager()
 flight_search = FlightSearch()
-notification_manager = NotificationManager()
+# notification_manager = NotificationManager()
 
 sheet_data = data_manager.get_data()
 
-# # Find IATA Code
+# Find IATA Code
 for row in sheet_data:
     if "iataCode" not in row or row["iataCode"] in ["", "N/A", "Not Found"]:
         print("Find missing IATA Code...")
@@ -39,6 +39,8 @@ for row in sheet_data:
     row["lowestPrice"] = cheapest_flight.price
     data_manager.update_data_row(row)
 
+    # Send notification to SMS or WhatsApp
+    """
     if cheapest_flight.price != "N/A" and cheapest_flight.price < row["lowestPrice"]:
         print(f"Lower price flight found to {row['city']}!")
         # notification_manager.send_sms(
@@ -53,6 +55,7 @@ for row in sheet_data:
                          f"from {cheapest_flight.origin_airport} to {cheapest_flight.destination_airport}, "
                          f"on {cheapest_flight.out_date} until {cheapest_flight.return_date}."
         )
-
+    """
+        
     # slowing down requests to avoid rate limit
     time.sleep(2)

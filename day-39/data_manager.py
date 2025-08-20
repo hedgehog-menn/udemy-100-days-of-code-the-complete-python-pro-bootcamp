@@ -2,7 +2,7 @@ import requests
 import os
 
 class DataManager:
-    #This class is responsible for talking to the Google Sheet.
+    # This class is responsible for talking to the Google Sheet.
     def __init__(self):
         self._token = os.environ["SHEETY_TOKEN"]
         self._sheety_endpoint = os.environ["SHEETY_ENDPOINT"]
