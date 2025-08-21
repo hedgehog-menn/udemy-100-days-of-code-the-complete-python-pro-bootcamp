@@ -16,7 +16,7 @@ sheet_data = data_manager.get_data()
 
 # # Find IATA Code
 for row in sheet_data:
-    if row["iataCode"] in ["", "N/A", "Not Found"]:
+    if "iataCode" not in row or row["iataCode"] in ["", "N/A", "Not Found"]:
         print("Find missing IATA Code...")
         row["iataCode"] = flight_search.get_destination_code(row["city"])
         print(f"{row["city"]} - {row["iataCode"]}")
