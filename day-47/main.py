@@ -1,11 +1,11 @@
 from bs4 import BeautifulSoup
 import requests
-# import smtplib
-# import os
-# from dotenv import load_dotenv
+import smtplib
+import os
+from dotenv import load_dotenv
 
 # Load environment variables from .env file
-# load_dotenv()
+load_dotenv()
 
 # Set the price below which you would like to get a notification
 BUY_PRICE = 70
@@ -28,7 +28,6 @@ price_text = price_tag.getText() # Don't know why, but add this extra line and t
 price = float(price_text.replace("$", ""))
 print(price)
 
-"""
 if price_as_float < BUY_PRICE:
     message = f"{title} is on sale for {price}!"
 
@@ -42,4 +41,3 @@ if price_as_float < BUY_PRICE:
             to_addrs=os.environ["EMAIL_ADDRESS"],
             msg=f"Subject:Amazon Price Alert!\n\n{message}\n{url}".encode("utf-8")
         )
-"""
