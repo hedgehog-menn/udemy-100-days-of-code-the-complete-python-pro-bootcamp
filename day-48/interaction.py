@@ -13,4 +13,11 @@ driver.get("https://en.wikipedia.org/wiki/Main_Page")
 
 # Hone in on anchor tag using CSS selectors
 article_count = driver.find_element(By.CSS_SELECTOR, value="#articlecount a")
-print(article_count.text)
+# article_count.click()
+
+# Search input is hidden when small screen
+search_icon = driver.find_element(By.CSS_SELECTOR, value="#p-search a")
+search_icon.click()
+
+search = driver.find_element(By.NAME, value="search")
+search.send_keys("Python")
